@@ -4,11 +4,10 @@ provider "random" {}
 # see https://registry.terraform.io/providers/hashicorp/random/2.3.0/docs/resources/password for more information
 resource "random_password" "instance_password" {
   length  = 16
-  special = true
+  special = false
 }
 
-# outputting a password is NOT best practice, it is done here to illustrate the value
-# outputting sensitive values
+# outputting sensitive values is NOT best practice, it is done here for illustration purposes only
 output "instance_password" {
   description = "randomly generated value of `instance_password`"
   value       = random_password.instance_password.result
