@@ -9,6 +9,7 @@ data "aws_vpc" "secretless_terraform" {
   default = true
 }
 
+# see https://registry.terraform.io/providers/hashicorp/aws/3.7.0/docs/resources/security_group for more information
 resource "aws_security_group" "secretless_terraform" {
   # avoid setting the `name` attribute as the AWS API does not allow updating it
 
@@ -27,3 +28,16 @@ resource "aws_security_group" "secretless_terraform" {
   }
 }
 
+# see https://registry.terraform.io/providers/hashicorp/aws/3.7.0/docs/resources/security_group_rule for more information
+resource "aws_security_group_rule" "allow_mysql_from_self" {
+  description = "Allow inbound MySQL access from local IP address"
+  type        = "ingress"
+  from_port   = 3306
+  to_port     = 3306
+  protocol    = "tcp"
+
+  # use the output of icanhazip.com, then clean it up using the
+  # chomp function; see https://hashi.co/tf-chomp for information
+  cidr_blocks       = ["${chomp(data.http.icanhazip.body)}/32"]
+  security_group_id = aws_security_group.secretless_terraform.id
+}
