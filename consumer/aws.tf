@@ -9,3 +9,21 @@ data "aws_vpc" "secretless_terraform" {
   default = true
 }
 
+resource "aws_security_group" "secretless_terraform" {
+  # avoid setting the `name` attribute as the AWS API does not allow updating it
+
+  # dynamically retrieve the ID of the VPC selected in the `aws_vpc` data source
+  vpc_id = data.aws_vpc.secretless_terraform.id
+
+  tags = {
+    Name        = "Terraform-managed Security Group for Secretless Terraform"
+    Description = "Manage inbound / outbound traffic for RDS Instance"
+  }
+
+  lifecycle {
+    # ensure new security group is created and attached before
+    # attempting to destroy the current, existing security group
+    create_before_destroy = true
+  }
+}
+
