@@ -51,6 +51,7 @@ resource "aws_db_instance" "secretless_terraform" {
   name                = "secretless_terraform"
   password            = data.vault_generic_secret.aws_db_instance.data["password"]
   publicly_accessible = true # making DB Instances publicly available is NOT best practice, it is done here for illustration purposes only
+  skip_final_snapshot = true
   storage_type        = "gp2"
   username            = "devops"
 
