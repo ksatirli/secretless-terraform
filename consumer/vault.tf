@@ -5,16 +5,8 @@ provider "vault" {
 }
 
 # see https://registry.terraform.io/providers/hashicorp/vault/2.14.0/docs/data-sources/generic_secret for more information
-data "vault_generic_secret" "aws_instance" {
-  # retrieve version 1 of the `aws_instance` secret
-  path    = "secret/aws_instance"
+data "vault_generic_secret" "aws_db_instance" {
+  # retrieve version 1 of the `aws_db_instance` secret
+  path    = "secret/aws_db_instance"
   version = 1
-}
-
-output "aws_instance_password_version" {
-  value = data.vault_generic_secret.aws_instance.version
-}
-
-output "aws_instance_password_data" {
-  value = data.vault_generic_secret.aws_instance.data
 }

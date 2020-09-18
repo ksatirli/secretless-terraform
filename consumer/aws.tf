@@ -41,3 +41,38 @@ resource "aws_security_group_rule" "allow_mysql_from_self" {
   cidr_blocks       = ["${chomp(data.http.icanhazip.body)}/32"]
   security_group_id = aws_security_group.secretless_terraform.id
 }
+
+# see https://registry.terraform.io/providers/hashicorp/aws/3.7.0/docs/resources/db_instance for more information
+resource "aws_db_instance" "secretless_terraform" {
+  allocated_storage   = 20
+  apply_immediately   = true
+  engine              = "mariadb"
+  instance_class      = "db.t2.micro"
+  name                = "secretless_terraform"
+  password            = data.vault_generic_secret.aws_db_instance.data["password"]
+  publicly_accessible = true # making DB Instances publicly available is NOT best practice, it is done here for illustration purposes only
+  storage_type        = "gp2"
+  username            = "devops"
+
+  vpc_security_group_ids = [
+    aws_security_group.secretless_terraform.id
+  ]
+
+  tags = {
+    Name = "Terraform-managed EC2 Instance for Secretless Terraform workshop"
+  }
+}
+
+locals {
+  # set up all required parts for the connection string
+  # this is not strictly necessary, but allows for better readability
+  connection_string_host = "--host=\"${aws_db_instance.secretless_terraform.address}\""
+  connection_string_port = "--port=\"${aws_db_instance.secretless_terraform.port}\""
+  connection_string_user = "--user=\"${aws_db_instance.secretless_terraform.username}\""
+  connection_string_pass = "--password=\"${data.vault_generic_secret.aws_db_instance.data["password"]}\""
+}
+
+output "connection_string" {
+  description = "connection string for the RDS Instance"
+  value       = "mysql ${local.connection_string_host} ${local.connection_string_port} ${local.connection_string_user} ${local.connection_string_pass}"
+}
