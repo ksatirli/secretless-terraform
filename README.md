@@ -42,7 +42,7 @@ At this point, you can inspect your Vault installation and find the newly create
 
 ### Reading Secrets from  Vault
 
-In the `provisioner` directory, run `terraform plan -out="consumer.tfplan"` to see the operations that can be carried out:
+In the `consumer` directory, run `terraform plan -out="consumer.tfplan"` to see the operations that can be carried out:
 
 * Terraform will make a `GET` request to [icanhazip.com] using the `http` data source (`icanhazip`) to retrieve your IP address
 * Terraform will create an AWS Security Group Rule and add your IP address (from the previous step) as an authorized caller
