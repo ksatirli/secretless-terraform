@@ -22,9 +22,11 @@ TODO
 
 ## Notes
 
-* For a guide on how to enable a Secrets Engine in Vault, see the [Secrets Engines](https://learn.hashicorp.com/tutorials/vault/getting-started-secrets-engines#enable-a-secrets-engine) tutorial on HashiCorp Learn.
+
+## Notes
 
 * For a guide on how to initialize and unseal Vault, see the [Deploy Vault](https://learn.hashicorp.com/tutorials/vault/getting-started-deploy#initializing-the-vault) tutorial on HashiCorp Learn.
+* For a guide on how to enable a Secrets Engine in Vault, see the [Secrets Engines](https://learn.hashicorp.com/tutorials/vault/getting-started-secrets-engines#enable-a-secrets-engine) tutorial on HashiCorp Learn.
 
 ## Author Information
 
