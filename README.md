@@ -49,6 +49,17 @@ In the `consumer` directory, run `terraform plan -out="consumer.tfplan"` to see 
 * Terraform will read the `secret/aws_db_instance` path from your Vault installation using a `vault_generic_secret` data source (`aws_db_instance`)
 * Terraform will create an AWS RDS Instance (`secretless_terraform`) and set the instance password to the value of the `aws_db_instance` data source (from the previous step)
 
+When you have inspected the resources and are satisfied, execute the plan by running `terraform apply "consumer.tfplan"`.
+
+At this point, you can display the connection string for your MariaDB database using the [Terraform Output](https://www.terraform.io/docs/configuration/outputs.html) for `connection_string`:
+
+```shell
+terraform output connection_string
+```
+
+Please note: this string includes your RDS hostname, username, _and_ password. This is for demonstration purposes only and should _not_ be used in a _production_ setting.
+
+
 ## Notes
 
 * For a guide on how to initialize and unseal Vault, see the [Deploy Vault](https://learn.hashicorp.com/tutorials/vault/getting-started-deploy#initializing-the-vault) tutorial on HashiCorp Learn.
