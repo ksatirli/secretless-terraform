@@ -8,6 +8,7 @@
   - [Table of Contents](#table-of-contents)
   - [Requirements](#requirements)
   - [Usage](#usage)
+    - [Reading Secrets from  Vault](#reading-secrets-from--vault)
   - [Notes](#notes)
   - [Author Information](#author-information)
   - [License](#license)
@@ -18,10 +19,34 @@ The code in this repository requires an unsealed, initialized Vault installation
 
 ## Usage
 
-TODO
+This codebase consists of two separate projects:
 
-## Notes
+* `provisioner` showcases an implementation of the [Random Provider](https://registry.terraform.io/providers/hashicorp/random/latest) to generate passwords and store them in a Vault installation
+* `consumer` showcases an implementation of the [Vault Provider](https://registry.terraform.io/providers/hashicorp/vault/latest) to read secret data from a Vault installation and provision an AWS resource with it
 
+To start, ensure you have access to an initialized and unsealed Vault installation and update the `VAULT_ADDR` environment variable to reflect the address of the Vault installation you want to use.
+
+Next, initialize both directories by running `terraform init` to fetch any required provider plugins.
+
+### Adding Secrets to Vault
+
+In the `provisioner` directory, run `terraform plan -out="provisioner.tfplan"` to see the operations that can be carried out:
+
+* Terraform will create a `random_password` resource (`instance_password`)
+* Terraform will create a `vault_generic_secret` resource (`aws_db_instance`) and store it in Vault at `secret/aws_db_instance`
+
+When you have inspected the resources and are satisfied, execute the plan by running `terraform apply "provisioner.tfplan"`.
+
+At this point, you can inspect your Vault installation and find the newly created static secret.
+
+### Reading Secrets from  Vault
+
+In the `provisioner` directory, run `terraform plan -out="consumer.tfplan"` to see the operations that can be carried out:
+
+* Terraform will make a `GET` request to [icanhazip.com] using the `http` data source (`icanhazip`) to retrieve your IP address
+* Terraform will create an AWS Security Group Rule and add your IP address (from the previous step) as an authorized caller
+* Terraform will read the `secret/aws_db_instance` path from your Vault installation using a `vault_generic_secret` data source (`aws_db_instance`)
+* Terraform will create an AWS RDS Instance (`secretless_terraform`) and set the instance password to the value of the `aws_db_instance` data source (from the previous step)
 
 ## Notes
 
