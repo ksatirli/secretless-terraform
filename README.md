@@ -8,6 +8,7 @@
   - [Table of Contents](#table-of-contents)
   - [Requirements](#requirements)
   - [Usage](#usage)
+    - [Adding Secrets to Vault](#adding-secrets-to-vault)
     - [Reading Secrets from  Vault](#reading-secrets-from--vault)
   - [Notes](#notes)
   - [Author Information](#author-information)
