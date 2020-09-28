@@ -1,15 +1,20 @@
 # Secretless Terraform
 
-> TODO
+> Write to and read from HashiCorp Vault, using the [Vault Provider for Terraform](https://registry.terraform.io/providers/hashicorp/vault/latest).
 
 ## Table of Contents
 
 - [Secretless Terraform](#secretless-terraform)
   - [Table of Contents](#table-of-contents)
+  - [Requirements](#requirements)
   - [Usage](#usage)
   - [Notes](#notes)
   - [Author Information](#author-information)
   - [License](#license)
+
+## Requirements
+
+The code in this repository requires an unsealed, initialized Vault installation that can be accessed via the HTTP API.
 
 ## Usage
 
@@ -17,7 +22,9 @@ TODO
 
 ## Notes
 
-TODO
+* For a detailed guide on how to enable a Secrets Engine in Vault, see the [Secrets Engines](https://learn.hashicorp.com/tutorials/vault/getting-started-secrets-engines#enable-a-secrets-engine) tutorial on HashiCorp Learn.
+
+* For a detailed guide on how to initialize Vault, see the [Deploy Vault](https://learn.hashicorp.com/tutorials/vault/getting-started-deploy#initializing-the-vault) tutorial on HashiCorp Learn.
 
 ## Author Information
 
