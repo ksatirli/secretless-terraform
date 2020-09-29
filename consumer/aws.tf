@@ -60,7 +60,7 @@ resource "aws_db_instance" "secretless_terraform" {
   ]
 
   tags = {
-    Name = "Terraform-managed EC2 Instance for Secretless Terraform workshop"
+    Name = "Terraform-managed instance for Secretless Terraform workshop"
   }
 }
 
